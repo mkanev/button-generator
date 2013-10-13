@@ -1,4 +1,4 @@
 button-generator
 ================
 
-HTML5 + JS page that helps you to craeate and beautify buttons using CSS3
+Angular.js page that helps you to craeate and beautify buttons using CSS3
