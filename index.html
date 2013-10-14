@@ -11,22 +11,38 @@
     <div class="container">
         <h1>CSS3 Button Generator</h1>
 
-        <p>HTML5 + JS page that helps you to create and beautify buttons using CSS3</p>
+        <p>AngularJS page that helps you to create and beautify buttons using CSS3</p>
+
+        <p>Note: Normalize.css is used to clean button style</p>
     </div>
 </div>
 <div class="container" ng-controller="ButtonGeneratorCtrl">
     <div class="row">
         <div class="col-lg-4">
             <form action="#" method="post" class="form-horizontal">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Preview</h3>
+                <div class="panel-group">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Preview</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-8 col-lg-offset-2">
+                                    <div class="normalize">
+                                        <button id="preview1" name="preview1" style="{{buttonStyle}}">BUTTON</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="panel-body">
-                        <div class="row">
-                            <div class="col-lg-8 col-lg-offset-2">
-                                <div class="normalize">
-                                    <button id="preview1" name="preview1" ng-style='buttonStyle'>BUTTON</button>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Result</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <textarea class="form-control" rows="10" ng-bind="displayStyle"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -45,7 +61,7 @@
                                 </a>
                             </h4>
                         </div>
-                        <div id="collapse{{$index}}" class="panel-collapse collapse in">
+                        <div id="collapse{{$index}}" class="panel-collapse collapse" ng-class="$first ? 'in' : ''">
                             <div class="panel-body">
                                 <div class="row" ng-repeat="prop in propGroup.properties">
                                     <div class="col-lg-6">

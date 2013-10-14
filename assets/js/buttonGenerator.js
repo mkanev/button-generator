@@ -86,7 +86,7 @@ function SimplePropertyModel(label, cssName, defaultValue, units) {
             }
             return (cssName ? cssName + ': ' : '') +
                 (this.value.constructor === CssPropertyModel ? this.value.cssValue : this.value) +
-                (this.units.constructor === CssPropertyModel ? this.units.cssValue : this.units) + ';'
+                (this.units.constructor === CssPropertyModel ? this.units.cssValue : this.units) + ';\r\n'
         }
     }
 }
@@ -152,18 +152,18 @@ buttonGeneratorApp.controller('ButtonGeneratorCtrl', function ButtonGeneratorCtr
             properties: [
                 new SimplePropertyModel('Color', 'background-color', '#FFFFFF', enumerations.units[0])
             ]
-        }, shadow: {
-            title: 'Shadow',
-            order: 5,
-            properties: [
-                new OptionalPropertyModel('Position', '', enumerations.shadow.position, 1),
-                new SimplePropertyModel('Color', '', 'rgba(0, 0, 0, 0.075)', enumerations.units[0]),
-                new SimplePropertyModel('Offset X', '', 1, enumerations.units[1]),
-                new SimplePropertyModel('Offset Y', '', 1, enumerations.units[1]),
-                new SimplePropertyModel('Blur', '', 0, enumerations.units[1]),
-                new SimplePropertyModel('Spread', '', 0, enumerations.units[1])
-            ]
-        }, misc: {
+        }/*, shadow: {
+         title: 'Shadow',
+         order: 5,
+         properties: [
+         new OptionalPropertyModel('Position', '', enumerations.shadow.position, 1),
+         new SimplePropertyModel('Color', '', 'rgba(0, 0, 0, 0.075)', enumerations.units[0]),
+         new SimplePropertyModel('Offset X', '', 1, enumerations.units[1]),
+         new SimplePropertyModel('Offset Y', '', 1, enumerations.units[1]),
+         new SimplePropertyModel('Blur', '', 0, enumerations.units[1]),
+         new SimplePropertyModel('Spread', '', 0, enumerations.units[1])
+         ]
+         }*/, misc: {
             title: 'Miscellaneous',
             order: 6,
             properties: [
@@ -178,38 +178,23 @@ buttonGeneratorApp.controller('ButtonGeneratorCtrl', function ButtonGeneratorCtr
         buildStyle();
     }, true);
     function buildStyle() {
-        var cssString = '', propGroupName, propGroup, prop;
+        var cssString = '', cssDisplayString = '', propGroupName, propGroup, prop;
         angular.forEach($scope.model, function (value, key) {
             if (!angular.isArray(value.properties)) {
                 return;
             }
+            var curCss;
             angular.forEach(value.properties, function (value, key) {
+                curCss = value.getCss();
+                if (angular.isString(curCss) && curCss.length === 0) {
+                    return;
+                }
                 cssString += ' ' + value.getCss();
+                cssDisplayString += '\t' + value.getCss();
             });
         });
         $scope.buttonStyle = cssString;
-        console.log(cssString);
-        /*
-         width: 100%; ++
-         height: 34px; ++
-         display: block; ++
-
-         border: 1px solid #CCCCCC; ++
-         border-radius: 4px 4px 4px 4px; ++
-
-         font-size: 14px; ++
-         color: #555555; ++
-         line-height: 1.42857; ++
-
-         background-color: #FFFFFF; ++
-
-         box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset; ++
-
-         padding: 6px 12px;
-
-         vertical-align: middle;
-         transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
-         */
+        $scope.displayStyle = '.beatyButton {\r\n' + cssDisplayString + '}';
     }
 });
 
